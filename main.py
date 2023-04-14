@@ -56,7 +56,7 @@ user_text = ""
 result = pet_stock_languages["greetings"]
 # score = 0
 
-background_image = pygame.image.load("pet_background.jpeg").convert()
+background_image = pygame.image.load("assets/pet_background.jpeg").convert()
 img_width, img_height = background_image.get_size()
 img_width = img_width * screen_height/img_height
 background_image = pygame.transform.scale(background_image, (img_width, screen_height))

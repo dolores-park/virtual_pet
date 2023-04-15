@@ -1,6 +1,7 @@
 import pygame
 import sys
 from pet import Pet
+import random
 
 # Initialize Pygame
 pygame.init()
@@ -14,6 +15,13 @@ MAX_CHAT_WIDTH = 400
 font = pygame.font.Font(None, 26)
 text_color = (255, 255, 255)
 bg_color = (173, 216, 230)
+
+SPECIAL_EVENT = pygame.USEREVENT + 1
+
+def set_random_timer_interval():
+    pygame.time.set_timer(SPECIAL_EVENT, millis = random.randint(20000, 30000))
+
+set_random_timer_interval()
 
 # Create a function to draw text
 def draw_text(text, x, y, offset_width):
@@ -71,6 +79,11 @@ while True:
 
             elif event.key == pygame.K_BACKSPACE:
                 user_text = user_text[:-1]
+
+        if event.type == SPECIAL_EVENT:
+            logger.info("*****__*****SPECIAL EVENTS:::")
+            result = my_pet.process_special_events()
+            set_random_timer_interval()
 
     screen.fill(bg_color)
     screen.blit(background_image, (0, 0))

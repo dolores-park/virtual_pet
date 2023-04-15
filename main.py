@@ -2,6 +2,7 @@ import pygame
 import sys
 from pet import Pet
 import random
+import logging
 
 # Initialize Pygame
 pygame.init()
@@ -81,7 +82,7 @@ while True:
                 user_text = user_text[:-1]
 
         if event.type == SPECIAL_EVENT:
-            logger.info("*****__*****SPECIAL EVENTS:::")
+            logging.info("*****__*****SPECIAL EVENTS:::")
             result = my_pet.process_special_events()
             set_random_timer_interval()
 

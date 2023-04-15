@@ -1,5 +1,6 @@
 import pygame
 import sys
+from pet import Pet
 
 # Initialize Pygame
 pygame.init()
@@ -39,21 +40,11 @@ def draw_text(text, x, y, offset_width):
         surface = font.render(line.strip(), True, text_color)
         screen.blit(surface, (x, y))
 
-
-# Game variables
-# questions = [
-#     {"question": "What is 5 + 3?", "answer": "8"},
-#     {"question": "What is the capital of France?", "answer": "Paris"},
-#     {"question": "What is the square root of 64?", "answer": "8"},
-# ]
-# current_question_index = 0
-
-pet_stock_languages = {"greetings": "Hello, I am your pet. Talk to me by typing on the screen! <3 ",
-                       "dummy_response": "Hi, I heard you say this! "}
-chat_history = {}
+chat_history = []
+my_pet = Pet()
 
 user_text = ""
-result = pet_stock_languages["greetings"]
+result = my_pet.get_filler_sentences()["greetings"]
 # score = 0
 
 background_image = pygame.image.load("assets/pet_background.jpeg").convert()
@@ -74,18 +65,12 @@ while True:
                 user_text += event.unicode
 
             elif event.key == pygame.K_RETURN:
-                result = pet_stock_languages["dummy_response"] + user_text
+                # result = my_pet.get_filler_sentences()["dummy_response"] + user_text
+                result = my_pet.process_user_input(user_text)
                 user_text = ""
 
             elif event.key == pygame.K_BACKSPACE:
                 user_text = user_text[:-1]
-
-            # elif event.key == pygame.K_n:
-            #     user_text = ""
-            #     # result = ""
-            #     current_question_index += 1
-            #     if current_question_index >= len(questions):
-            #         current_question_index = 0
 
     screen.fill(bg_color)
     screen.blit(background_image, (0, 0))
@@ -97,3 +82,7 @@ while True:
 
     # Update the screen
     pygame.display.update()
+
+    if not my_pet.is_initialized():
+        result = my_pet.get_initial_response()
+        my_pet.initialized = True
